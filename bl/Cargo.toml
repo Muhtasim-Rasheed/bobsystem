@@ -1,0 +1,9 @@
+[package]
+name = "bl"
+version = "0.0.0"
+edition = "2024"
+
+[dependencies]
+bobin = { version = "0.0.0", path = "../bobin" }
+bobj = { version = "0.0.0", path = "../bobj" }
+clap = { version = "4.6.6", features = ["derive"] }

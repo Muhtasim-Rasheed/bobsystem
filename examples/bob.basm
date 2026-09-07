@@ -1,0 +1,6 @@
+_start:
+	ld r0, four
+	trap 2
+	trap 0
+four: .fill bob
+bob: .string "bob"
