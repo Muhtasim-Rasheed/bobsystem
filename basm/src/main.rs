@@ -1,11 +1,6 @@
 use std::path::PathBuf;
 
-use crate::{lexer::lex, parser::parse, pass1::build_symbols, pass2::generate_bobject};
-
-mod lexer;
-mod parser;
-mod pass1;
-mod pass2;
+use basm::{lexer::lex, parser::parse, pass1::build_symbols, pass2::generate_bobject};
 
 macro_rules! err {
     ($fmt:expr $(, $($arg:tt)*)?) => {{
@@ -13,12 +8,6 @@ macro_rules! err {
         let _ = std::io::stdout().write_fmt(format_args!(concat!($fmt, "\n") $(, $($arg)*)?));
         std::process::exit(1);
     }};
-}
-
-#[derive(Debug, Clone)]
-pub struct Spanned<T> {
-    pub value: T,
-    pub line: usize,
 }
 
 fn main() {

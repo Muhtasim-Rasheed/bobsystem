@@ -1,0 +1,734 @@
+.global _start
+
+_start:
+    ld r6, ptr_dat_st
+    ld r4, ptr_ret_st
+    ld r0, main_ptr
+    jsr r0
+    trap 0
+
+main_ptr: .fill main
+
+ptr_dat_st: .fill dat_st
+ptr_ret_st: .fill ret_st
+dat_st: .space 0x2000
+ret_st: .space 0x2000
+
+.global __rt_bitor
+__rt_bitor:
+	str r5, r4, 0
+	str r7, r4, 1
+	add r4, 2
+	add r5, r6, -2
+	add r6, 6
+	ldr r0, r5, 0
+	str r0, r5, 2
+	ldr r0, r5, 2
+	not r0
+	str r0, r5, 3
+	ldr r0, r5, 1
+	str r0, r5, 4
+	ldr r0, r5, 4
+	not r0
+	str r0, r5, 5
+	ldr r0, r5, 3
+	ldr r1, r5, 5
+	and r0, r1
+	str r0, r5, 6
+	ldr r0, r5, 6
+	not r0
+	str r0, r5, 7
+	ldr r0, r5, 7
+	add r6, -8
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	add r6, -8
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __after_pool0
+__after_pool0:
+.global __rt_bitxor
+__rt_bitxor:
+	str r5, r4, 0
+	str r7, r4, 1
+	add r4, 2
+	add r5, r6, -2
+	add r6, 8
+	ldr r0, r5, 0
+	str r0, r5, 2
+	ldr r0, r5, 1
+	str r0, r5, 3
+	ldr r0, r5, 2
+	str r0, r6, 0
+	add r6, 1
+	ldr r0, r5, 3
+	str r0, r6, 0
+	add r6, 1
+	ld r0, __lfn0
+	jsr r0
+	str r0, r5, 4
+	ldr r0, r5, 0
+	str r0, r5, 5
+	ldr r0, r5, 1
+	str r0, r5, 6
+	ldr r0, r5, 5
+	ldr r1, r5, 6
+	and r0, r1
+	str r0, r5, 7
+	ldr r0, r5, 7
+	not r0
+	str r0, r5, 8
+	ldr r0, r5, 4
+	ldr r1, r5, 8
+	and r0, r1
+	str r0, r5, 9
+	ldr r0, r5, 9
+	add r6, -10
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	add r6, -10
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __after_pool1
+__lfn0: .fill __rt_bitor
+__after_pool1:
+.global __rt_logand
+__rt_logand:
+	str r5, r4, 0
+	str r7, r4, 1
+	add r4, 2
+	add r5, r6, -2
+	add r6, 3
+	ldr r0, r5, 0
+	str r0, r5, 2
+	ldr r0, r5, 2
+	brz __2L0
+	ldr r0, r5, 1
+	str r0, r5, 3
+	ldr r0, r5, 3
+	add r6, -5
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __2L1
+__2L0:
+	ld r0, __lint1
+	str r0, r5, 4
+	ldr r0, r5, 4
+	add r6, -5
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+__2L1:
+	add r6, -5
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __after_pool2
+__lint1: .fill 0
+__after_pool2:
+.global __rt_logor
+__rt_logor:
+	str r5, r4, 0
+	str r7, r4, 1
+	add r4, 2
+	add r5, r6, -2
+	add r6, 3
+	ldr r0, r5, 0
+	str r0, r5, 2
+	ldr r0, r5, 2
+	brz __3L0
+	ldr r0, r5, 0
+	str r0, r5, 3
+	ldr r0, r5, 3
+	add r6, -5
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __3L1
+__3L0:
+	ldr r0, r5, 1
+	str r0, r5, 4
+	ldr r0, r5, 4
+	add r6, -5
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+__3L1:
+	add r6, -5
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __after_pool3
+__after_pool3:
+.global __rt_lognot
+__rt_lognot:
+	str r5, r4, 0
+	str r7, r4, 1
+	add r4, 2
+	add r5, r6, -1
+	add r6, 3
+	ldr r0, r5, 0
+	str r0, r5, 1
+	ldr r0, r5, 1
+	brz __4L0
+	ld r0, __lint2
+	str r0, r5, 2
+	ldr r0, r5, 2
+	add r6, -4
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __4L1
+__4L0:
+	ld r0, __lint3
+	str r0, r5, 3
+	ldr r0, r5, 3
+	add r6, -4
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+__4L1:
+	add r6, -4
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __after_pool4
+__lint2: .fill 0
+__lint3: .fill 1
+__after_pool4:
+.global __rt_mul
+__rt_mul:
+	str r5, r4, 0
+	str r7, r4, 1
+	add r4, 2
+	add r5, r6, -2
+	add r6, 10
+	ld r0, __lint4
+	str r0, r5, 3
+	ldr r0, r5, 3
+	str r0, r5, 2
+__5L0:
+	ldr r0, r5, 1
+	str r0, r5, 4
+	ldr r0, r5, 4
+	brz __5L1
+	ldr r0, r5, 2
+	str r0, r5, 5
+	ldr r0, r5, 0
+	str r0, r5, 6
+	ldr r0, r5, 5
+	ldr r1, r5, 6
+	add r0, r1
+	str r0, r5, 7
+	ldr r0, r5, 7
+	str r0, r5, 2
+	ldr r0, r5, 1
+	str r0, r5, 8
+	ld r0, __lint5
+	str r0, r5, 9
+	ldr r0, r5, 8
+	ldr r1, r5, 9
+	not r1
+	add r1, 1
+	add r0, r1
+	str r0, r5, 10
+	ldr r0, r5, 10
+	str r0, r5, 1
+	br __5L0
+__5L1:
+	ldr r0, r5, 2
+	str r0, r5, 11
+	ldr r0, r5, 11
+	add r6, -12
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	add r6, -12
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __after_pool5
+__lint4: .fill 0
+__lint5: .fill 1
+__after_pool5:
+.global __rt_div
+__rt_div:
+	str r5, r4, 0
+	str r7, r4, 1
+	add r4, 2
+	add r5, r6, -2
+	add r6, 12
+	ld r0, __lint6
+	str r0, r5, 3
+	ldr r0, r5, 3
+	str r0, r5, 2
+__6L0:
+	ldr r0, r5, 0
+	str r0, r5, 4
+	ldr r0, r5, 1
+	str r0, r5, 5
+	ldr r0, r5, 4
+	str r0, r6, 0
+	add r6, 1
+	ldr r0, r5, 5
+	str r0, r6, 0
+	add r6, 1
+	ld r0, __lfn7
+	jsr r0
+	str r0, r5, 6
+	ldr r0, r5, 6
+	brz __6L1
+	ldr r0, r5, 0
+	str r0, r5, 7
+	ldr r0, r5, 1
+	str r0, r5, 8
+	ldr r0, r5, 7
+	ldr r1, r5, 8
+	not r1
+	add r1, 1
+	add r0, r1
+	str r0, r5, 9
+	ldr r0, r5, 9
+	str r0, r5, 0
+	ldr r0, r5, 2
+	str r0, r5, 10
+	ld r0, __lint8
+	str r0, r5, 11
+	ldr r0, r5, 10
+	ldr r1, r5, 11
+	add r0, r1
+	str r0, r5, 12
+	ldr r0, r5, 12
+	str r0, r5, 2
+	br __6L0
+__6L1:
+	ldr r0, r5, 2
+	str r0, r5, 13
+	ldr r0, r5, 13
+	add r6, -14
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	add r6, -14
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __after_pool6
+__lint6: .fill 0
+__lint8: .fill 1
+__lfn7: .fill __rt_ge
+__after_pool6:
+.global __rt_mod
+__rt_mod:
+	str r5, r4, 0
+	str r7, r4, 1
+	add r4, 2
+	add r5, r6, -2
+	add r6, 7
+	ldr r0, r5, 0
+	str r0, r5, 2
+	ldr r0, r5, 1
+	str r0, r5, 3
+	ldr r0, r5, 0
+	str r0, r5, 4
+	ldr r0, r5, 1
+	str r0, r5, 5
+	ldr r0, r5, 4
+	str r0, r6, 0
+	add r6, 1
+	ldr r0, r5, 5
+	str r0, r6, 0
+	add r6, 1
+	ld r0, __lfn9
+	jsr r0
+	str r0, r5, 6
+	ldr r0, r5, 3
+	str r0, r6, 0
+	add r6, 1
+	ldr r0, r5, 6
+	str r0, r6, 0
+	add r6, 1
+	ld r0, __lfn10
+	jsr r0
+	str r0, r5, 7
+	ldr r0, r5, 2
+	ldr r1, r5, 7
+	not r1
+	add r1, 1
+	add r0, r1
+	str r0, r5, 8
+	ldr r0, r5, 8
+	add r6, -9
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	add r6, -9
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __after_pool7
+__lfn9: .fill __rt_div
+__lfn10: .fill __rt_mul
+__after_pool7:
+.global __rt_eq
+__rt_eq:
+	str r5, r4, 0
+	str r7, r4, 1
+	add r4, 2
+	add r5, r6, -2
+	add r6, 5
+	ldr r0, r5, 0
+	str r0, r5, 2
+	ldr r0, r5, 1
+	str r0, r5, 3
+	ldr r0, r5, 2
+	ldr r1, r5, 3
+	not r1
+	add r1, 1
+	add r0, r1
+	str r0, r5, 4
+	ldr r0, r5, 4
+	brz __8L0
+	ld r0, __lint11
+	str r0, r5, 5
+	ldr r0, r5, 5
+	add r6, -7
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __8L1
+__8L0:
+	ld r0, __lint12
+	str r0, r5, 6
+	ldr r0, r5, 6
+	add r6, -7
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+__8L1:
+	add r6, -7
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __after_pool8
+__lint11: .fill 0
+__lint12: .fill 1
+__after_pool8:
+.global __rt_ne
+__rt_ne:
+	str r5, r4, 0
+	str r7, r4, 1
+	add r4, 2
+	add r5, r6, -2
+	add r6, 4
+	ldr r0, r5, 0
+	str r0, r5, 2
+	ldr r0, r5, 1
+	str r0, r5, 3
+	ldr r0, r5, 2
+	str r0, r6, 0
+	add r6, 1
+	ldr r0, r5, 3
+	str r0, r6, 0
+	add r6, 1
+	ld r0, __lfn13
+	jsr r0
+	str r0, r5, 4
+	ldr r0, r5, 4
+	str r0, r6, 0
+	add r6, 1
+	ld r0, __lfn14
+	jsr r0
+	str r0, r5, 5
+	ldr r0, r5, 5
+	add r6, -6
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	add r6, -6
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __after_pool9
+__lfn13: .fill __rt_eq
+__lfn14: .fill __rt_lognot
+__after_pool9:
+.global __rt_is_neg
+__rt_is_neg:
+	str r5, r4, 0
+	str r7, r4, 1
+	add r4, 2
+	add r5, r6, -1
+	add r6, 7
+	ldr r0, r5, 0
+	str r0, r5, 2
+	ld r0, __lint15
+	str r0, r5, 3
+	ldr r0, r5, 2
+	ldr r1, r5, 3
+	and r0, r1
+	str r0, r5, 4
+	ldr r0, r5, 4
+	str r0, r5, 1
+	ldr r0, r5, 1
+	str r0, r5, 5
+	ldr r0, r5, 5
+	brz __10L0
+	ld r0, __lint16
+	str r0, r5, 6
+	ldr r0, r5, 6
+	add r6, -8
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __10L1
+__10L0:
+	ld r0, __lint17
+	str r0, r5, 7
+	ldr r0, r5, 7
+	add r6, -8
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+__10L1:
+	add r6, -8
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __after_pool10
+__lint15: .fill 32768
+__lint16: .fill 1
+__lint17: .fill 0
+__after_pool10:
+.global __rt_lt
+__rt_lt:
+	str r5, r4, 0
+	str r7, r4, 1
+	add r4, 2
+	add r5, r6, -2
+	add r6, 14
+	ldr r0, r5, 0
+	str r0, r5, 4
+	ldr r0, r5, 4
+	str r0, r6, 0
+	add r6, 1
+	ld r0, __lfn18
+	jsr r0
+	str r0, r5, 5
+	ldr r0, r5, 5
+	str r0, r5, 2
+	ldr r0, r5, 1
+	str r0, r5, 6
+	ldr r0, r5, 6
+	str r0, r6, 0
+	add r6, 1
+	ld r0, __lfn18
+	jsr r0
+	str r0, r5, 7
+	ldr r0, r5, 7
+	str r0, r5, 3
+	ldr r0, r5, 2
+	str r0, r5, 8
+	ldr r0, r5, 3
+	str r0, r5, 9
+	ldr r0, r5, 8
+	str r0, r6, 0
+	add r6, 1
+	ldr r0, r5, 9
+	str r0, r6, 0
+	add r6, 1
+	ld r0, __lfn19
+	jsr r0
+	str r0, r5, 10
+	ldr r0, r5, 10
+	brz __11L0
+	ldr r0, r5, 2
+	str r0, r5, 11
+	ldr r0, r5, 11
+	add r6, -16
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __11L1
+__11L0:
+	ldr r0, r5, 0
+	str r0, r5, 12
+	ldr r0, r5, 1
+	str r0, r5, 13
+	ldr r0, r5, 12
+	ldr r1, r5, 13
+	not r1
+	add r1, 1
+	add r0, r1
+	str r0, r5, 14
+	ldr r0, r5, 14
+	str r0, r6, 0
+	add r6, 1
+	ld r0, __lfn18
+	jsr r0
+	str r0, r5, 15
+	ldr r0, r5, 15
+	add r6, -16
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+__11L1:
+	add r6, -16
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __after_pool11
+__lfn18: .fill __rt_is_neg
+__lfn19: .fill __rt_bitxor
+__after_pool11:
+.global __rt_gt
+__rt_gt:
+	str r5, r4, 0
+	str r7, r4, 1
+	add r4, 2
+	add r5, r6, -2
+	add r6, 3
+	ldr r0, r5, 1
+	str r0, r5, 2
+	ldr r0, r5, 0
+	str r0, r5, 3
+	ldr r0, r5, 2
+	str r0, r6, 0
+	add r6, 1
+	ldr r0, r5, 3
+	str r0, r6, 0
+	add r6, 1
+	ld r0, __lfn20
+	jsr r0
+	str r0, r5, 4
+	ldr r0, r5, 4
+	add r6, -5
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	add r6, -5
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __after_pool12
+__lfn20: .fill __rt_lt
+__after_pool12:
+.global __rt_le
+__rt_le:
+	str r5, r4, 0
+	str r7, r4, 1
+	add r4, 2
+	add r5, r6, -2
+	add r6, 4
+	ldr r0, r5, 0
+	str r0, r5, 2
+	ldr r0, r5, 1
+	str r0, r5, 3
+	ldr r0, r5, 2
+	str r0, r6, 0
+	add r6, 1
+	ldr r0, r5, 3
+	str r0, r6, 0
+	add r6, 1
+	ld r0, __lfn21
+	jsr r0
+	str r0, r5, 4
+	ldr r0, r5, 4
+	str r0, r6, 0
+	add r6, 1
+	ld r0, __lfn22
+	jsr r0
+	str r0, r5, 5
+	ldr r0, r5, 5
+	add r6, -6
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	add r6, -6
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __after_pool13
+__lfn21: .fill __rt_gt
+__lfn22: .fill __rt_lognot
+__after_pool13:
+.global __rt_ge
+__rt_ge:
+	str r5, r4, 0
+	str r7, r4, 1
+	add r4, 2
+	add r5, r6, -2
+	add r6, 4
+	ldr r0, r5, 0
+	str r0, r5, 2
+	ldr r0, r5, 1
+	str r0, r5, 3
+	ldr r0, r5, 2
+	str r0, r6, 0
+	add r6, 1
+	ldr r0, r5, 3
+	str r0, r6, 0
+	add r6, 1
+	ld r0, __lfn23
+	jsr r0
+	str r0, r5, 4
+	ldr r0, r5, 4
+	str r0, r6, 0
+	add r6, 1
+	ld r0, __lfn24
+	jsr r0
+	str r0, r5, 5
+	ldr r0, r5, 5
+	add r6, -6
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	add r6, -6
+	add r4, -2
+	ldr r7, r4, 1
+	ldr r5, r4, 0
+	ret
+	br __after_pool14
+__lfn23: .fill __rt_lt
+__lfn24: .fill __rt_lognot
+__after_pool14:

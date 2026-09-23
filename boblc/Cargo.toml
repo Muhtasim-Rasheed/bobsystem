@@ -1,0 +1,8 @@
+[package]
+name = "boblc"
+version = "0.0.0"
+edition = "2024"
+
+[dependencies]
+basm = { version = "0.0.0", path = "../basm" }
+colored = "3.1.1"

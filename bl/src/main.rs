@@ -28,11 +28,19 @@ fn main() {
     let args = Args::parse();
 
     let bobject_files = parse_bobject_files(&args);
+    let (bobject_files, bobject_paths) = sort_bobjects_and_paths(bobject_files, args.inputs);
     let base_addresses = compute_base_addresses(&bobject_files);
     let global_symbol_table = build_global_symbol_table(&bobject_files, &base_addresses);
+    // {
+    //     let mut global_symbol_table_sorted = global_symbol_table.iter().collect::<Vec<_>>();
+    //     global_symbol_table_sorted.sort_unstable_by_key(|v| v.1);
+    //     for entry in global_symbol_table_sorted {
+    //         println!("{}: {:#06x}", entry.0, entry.1);
+    //     }
+    // }
     let resolved_relocations =
         resolve_relocations(&bobject_files, &base_addresses, &global_symbol_table);
-    let fixup_values = compute_fixup_values(&base_addresses, &resolved_relocations);
+    let fixup_values = compute_fixup_values(&bobject_paths, &base_addresses, &resolved_relocations);
     let mut words = bobject_files
         .into_iter()
         .map(|v| v.words)
@@ -74,6 +82,33 @@ fn parse_bobject_files(args: &Args) -> Vec<BobjectFile> {
         err!("Error: exiting because of broken bobject file(s)");
     }
     bobject_files
+}
+
+fn sort_bobjects_and_paths(
+    bobject_files: Vec<BobjectFile>,
+    bobject_paths: Vec<PathBuf>,
+) -> (Vec<BobjectFile>, Vec<PathBuf>) {
+    let mut bobjects = Vec::new();
+    let mut bobject_p = Vec::new();
+    let mut did_find_start = false;
+
+    for (bobject, bobject_path) in bobject_files.into_iter().zip(bobject_paths.into_iter()) {
+        if let Some(sym) = bobject.find_symbol("_start")
+            && sym.binding == Binding::Global
+        {
+            bobjects.insert(0, bobject);
+            bobject_p.insert(0, bobject_path);
+            did_find_start = true;
+        } else {
+            bobjects.push(bobject);
+            bobject_p.push(bobject_path);
+        }
+    }
+
+    if !did_find_start {
+        eprintln!("Warning: couldn't find _start. Using first bobject as the start of the program");
+    }
+    (bobjects, bobject_p)
 }
 
 fn compute_base_addresses(bobject_files: &[BobjectFile]) -> Vec<u32> {
@@ -160,6 +195,7 @@ fn resolve_relocations(
 }
 
 fn compute_fixup_values(
+    bobject_paths: &[PathBuf],
     base_addresses: &[u32],
     resolved_relocations: &[ResolvedRelocation],
 ) -> Vec<u16> {
@@ -168,12 +204,20 @@ fn compute_fixup_values(
     for r in resolved_relocations {
         let result = match r.kind {
             RelocationKind::Abs16 => Ok(r.target),
-            RelocationKind::PcRel9 => {
-                pc_rel_fixup(r.target, base_addresses[r.object_index], r.site, 9)
-            }
-            RelocationKind::PcRel11 => {
-                pc_rel_fixup(r.target, base_addresses[r.object_index], r.site, 11)
-            }
+            RelocationKind::PcRel9 => pc_rel_fixup(
+                r.target,
+                &bobject_paths[r.object_index],
+                base_addresses[r.object_index],
+                r.site,
+                9,
+            ),
+            RelocationKind::PcRel11 => pc_rel_fixup(
+                r.target,
+                &bobject_paths[r.object_index],
+                base_addresses[r.object_index],
+                r.site,
+                11,
+            ),
         };
         match result {
             Ok(fixup) => out.push(fixup),
@@ -189,13 +233,22 @@ fn compute_fixup_values(
     out
 }
 
-fn pc_rel_fixup(target: u16, base: u32, site: u16, bits: u32) -> Result<u16, String> {
+fn pc_rel_fixup(
+    target: u16,
+    bobject_path: &PathBuf,
+    base: u32,
+    site: u16,
+    bits: u32,
+) -> Result<u16, String> {
     let site_addr = (base as u16).wrapping_add(site).wrapping_add(1);
     let fixup = target.wrapping_sub(site_addr) as i16;
 
     let (lo, hi) = (-(1 << (bits - 1)), (1 << (bits - 1)) - 1);
     if fixup < lo || fixup > hi {
-        return Err(format!("relocation out of range ({fixup} in {bits} bits)"));
+        return Err(format!(
+            "bobject {}: relocation out of range ({fixup} in {bits} bits)",
+            bobject_path.display(),
+        ));
     }
     Ok(fixup as u16)
 }

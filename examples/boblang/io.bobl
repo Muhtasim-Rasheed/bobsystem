@@ -1,0 +1,23 @@
+func putc(ch: int) {
+	asm {
+		r0 = in(ch),
+		trap 1,
+	}
+	return;
+}
+
+func puts(str: *int) {
+	asm {
+		r0 = in(str),
+		trap 2,
+	}
+	return;
+}
+
+func putn(num: int) {
+	if num >= 10 {
+		putn(num / 10);
+	}
+	putc(num % 10 + '0');
+	return;
+}

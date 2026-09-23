@@ -110,6 +110,7 @@ pub enum LineContent {
     FillDirective(Operand),
     StringDirective(String),
     GlobalDirective(String),
+    SpaceDirective(usize),
 }
 
 impl LineContent {
@@ -119,6 +120,7 @@ impl LineContent {
             LineContent::FillDirective(_) => 1,
             LineContent::StringDirective(s) => s.chars().count() + 1,
             LineContent::GlobalDirective(_) => 0,
+            LineContent::SpaceDirective(s) => *s,
         }
     }
 }
@@ -274,6 +276,21 @@ fn parse_directive(
             }
             match &operands[0].value {
                 Token::Word(name) => Ok(LineContent::GlobalDirective(name.clone())),
+                _ => Err(ParseError {
+                    line,
+                    kind: ParseErrorKind::ExpectedOperand,
+                }),
+            }
+        }
+        "space" => {
+            if operands.len() != 1 {
+                return Err(ParseError {
+                    line,
+                    kind: ParseErrorKind::TrailingTokens,
+                });
+            }
+            match &operands[0].value {
+                Token::Immediate(v) => Ok(LineContent::SpaceDirective(*v as usize)),
                 _ => Err(ParseError {
                     line,
                     kind: ParseErrorKind::ExpectedOperand,

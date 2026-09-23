@@ -4,4 +4,4 @@ version = "0.0.0"
 edition = "2024"
 
 [dependencies]
-bobj = { version = "0.0.0", path = "../bobj" }
+bobj = { version = "1.0.0-0", path = "../bobj" }

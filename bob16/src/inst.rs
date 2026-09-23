@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub enum Instruction {
     Nop,
     AddRR { dst: u8, src1: u8, src2: u8 },

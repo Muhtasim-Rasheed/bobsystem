@@ -1,0 +1,8 @@
+import io;
+
+func main() {
+	io::puts("bob");
+	io::putn(16);
+	io::putc('\n');
+	return;
+}

@@ -173,7 +173,22 @@ impl Machine {
         }
         let fetched = self.fetch();
         let decoded = Instruction::from(fetched);
+        // println!("{:#06x}: {decoded:?}", self.pc);
         self.execute(decoded);
+        // for addr in (0x0008..0x0108).step_by(16) {
+        //     print!("{:#06x}: ", addr);
+
+        //     for offset in 0..16 {
+        //         let index = addr + offset;
+
+        //         if index < 0x0108 {
+        //             print!("{:04x} ", self.memory[index]);
+        //         }
+        //     }
+
+        //     println!();
+        // }
+        // println!("{:?}", self.regs);
     }
 
     pub fn run(&mut self) {
@@ -183,6 +198,7 @@ impl Machine {
         self.halted = false;
         while !self.halted {
             self.cycle();
+            // let _ = std::io::stdin().read_line(&mut String::new());
         }
     }
 }
@@ -194,7 +210,7 @@ struct Registers {
 impl std::fmt::Debug for Registers {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         for (i, &reg) in self.regs.iter().enumerate() {
-            writeln!(f, "r{i}: {reg:#x}")?;
+            writeln!(f, "r{i}: {reg:#06x}")?;
         }
         Ok(())
     }

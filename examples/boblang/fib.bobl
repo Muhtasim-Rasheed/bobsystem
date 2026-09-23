@@ -1,0 +1,15 @@
+import io;
+
+func main() {
+	let x = 0;
+	let y = 1;
+	while x <= y {
+		io::putn(x);
+		io::putc('\n');
+ 
+		let z = x + y;
+		x = y;
+		y = z;
+	}
+	return;
+} 

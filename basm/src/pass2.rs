@@ -149,6 +149,9 @@ pub fn generate_bobject(ast: Vec<SourceLine>, layout: LayoutResult) -> BobjectFi
                     bobject_file.words.push(0); // null terminator -- word_count() already counted this
                 }
                 LineContent::GlobalDirective(_) => {}
+                LineContent::SpaceDirective(s) => {
+                    bobject_file.words.extend(std::iter::repeat(0).take(s));
+                }
             }
         }
     }

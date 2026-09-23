@@ -4,4 +4,4 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-bobin = { version = "0.0.0", path = "../bobin" }
+bobin = { version = "1.0.0-0", path = "../bobin" }
